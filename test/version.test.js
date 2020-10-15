@@ -26,5 +26,5 @@ describe('basic tests of SPO-Returns app', function() {
     assert.strictEqual(true, /^(feature\/.*|bugfix\/.*|release|master):.*/.test(versionInfoText));
   });
 
-  after(() => driver && driver.quit());
+  after(function() { driver && driver.quit() });
 });
