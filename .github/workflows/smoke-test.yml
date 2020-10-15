@@ -24,7 +24,7 @@ jobs:
       - name: Run tests
         run: BASE_RETURNS_URL=${{ env.BASE_RETURNS_URL }} npm run test
       - name: Emit smoke test success to app for release
-        uses: mvasign/dispatch-action@main
+        uses: mvasigh/dispatch-action@main
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           repo: ${{ github.event.client_payload.application }}
