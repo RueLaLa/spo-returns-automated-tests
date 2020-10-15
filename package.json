@@ -1,0 +1,23 @@
+{
+  "name": "spo-returns-automated-tests",
+  "version": "0.0.1",
+  "description": "Test suite for automated UI tests",
+  "main": "index.js",
+  "scripts": {
+    "lint": "eslint --format codeframe --ext .js '**/*.js'",
+    "test": "mocha --recursive --timeout 10000"
+  },
+  "author": "Shop Premium Outlets",
+  "license": "UNLICENSED",
+  "dependencies": {
+    "chromedriver": "86.0.0",
+    "chromium": "3.0.2",
+    "mocha": "8.1.3",
+    "selenium-webdriver": "4.0.0-alpha.7"
+  },
+  "devDependencies": {
+    "eslint": "7.11.0",
+    "eslint-plugin-import": "2.22.1",
+    "eslint-plugin-mocha": "8.0.0"
+  }
+}
