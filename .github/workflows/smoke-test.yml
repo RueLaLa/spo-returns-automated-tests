@@ -29,8 +29,3 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
           repo: ${{ github.event.client_payload.application }}
           event_type: 'deploy-event'
-          message: |
-            {
-              "branch": "${{ github.event.client_payload.branch }}"
-              "fleet": "peach"
-            }
