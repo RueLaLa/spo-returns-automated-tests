@@ -28,5 +28,5 @@ jobs:
         with:
           token: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
           repository: ${{ github.event.client_payload.application }}
-          event_type: 'deploy-event'
+          event-type: 'deploy-event'
           client-payload: '{ "branch": "${{ github.event.client_payload.branch }}", "fleet": "${{ github.event.client_payload.fleet }}" }'
