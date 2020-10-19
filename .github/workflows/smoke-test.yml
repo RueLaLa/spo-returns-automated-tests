@@ -28,6 +28,6 @@ jobs:
       - name: Get and update the release
         shell: bash
         run: |
-          get_tag_url="https://api.github.com/repos/RueLaLa/${{ github.event.client_payload.application }}/releases/tags/${{ github.event.client_payload.release_tag }}
+          get_tag_url="https://api.github.com/repos/RueLaLa/${{ github.event.client_payload.application }}/releases/tags/${{ github.event.client_payload.release_tag }}"
           release_url=$(curl --location --request GET "$get_tag_url" --header 'Content-Type: application/json' --header 'Accept: application/vnd.github.nebula-preview+json' --header 'Authorization: Bearer ${{ secrets.PERSONAL_ACCESS_TOKEN }}' | grep '"url"' | grep "${{ github.event.client_payload.application }}" | sed -e 's/[ \t]*"url":[ \t]*//' -e 's/[",]//g')
           echo "Release URL: $release_url"
