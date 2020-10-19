@@ -14,7 +14,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: debugging output
-        run: echo "${{ github.event_name }} - ${{ github.event.client_payload.application }}"
+        run: echo "${{ github.event_name }} - ${{ github.event.client_payload.application }} - ${{ github.event.client_payload.release_tag }}"
       - name: Checkout repo
         uses: actions/checkout@main
       - name: Install Node.js ${{ env.NODE_VERSION }}
@@ -31,3 +31,6 @@ jobs:
           get_tag_url="https://api.github.com/repos/RueLaLa/${{ github.event.client_payload.application }}/releases/tags/${{ github.event.client_payload.release_tag }}"
           release_url=$(curl --location --request GET "$get_tag_url" --header 'Content-Type: application/json' --header 'Accept: application/vnd.github.nebula-preview+json' --header 'Authorization: Bearer ${{ secrets.PERSONAL_ACCESS_TOKEN }}' | grep '"url"' | grep "${{ github.event.client_payload.application }}" | sed -e 's/[ \t]*"url":[ \t]*//' -e 's/[",]//g')
           echo "Release URL: $release_url"
+          echo "Patching release: ${{ github.event.client_payload.release_tag }}"
+          curl --fail --location --request PATCH "$release_url" --header 'Content-Type: application/json' --header 'Accept: application/vnd.github.nebula-preview+json' --header 'Authorization: Bearer ${{ secrets.PERSONAL_ACCESS_TOKEN }}' -d '{"prerelease": false}'
+          
