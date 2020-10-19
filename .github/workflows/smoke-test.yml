@@ -14,7 +14,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: debugging output
-        run: echo "${{ github.event_name }} - ${{ github.event.type }}"
+        run: echo "${{ github.event_name }} - ${{ github.event.client_payload.application }}"
       - name: Checkout repo
         uses: actions/checkout@main
       - name: Install Node.js ${{ env.NODE_VERSION }}
@@ -25,10 +25,9 @@ jobs:
         run: npm ci
       - name: Run tests
         run: BASE_RETURNS_URL=${{ env.BASE_RETURNS_URL }} npm run test
-      - name: Emit smoke test success to app for release
-        uses: peter-evans/repository-dispatch@v1
-        with:
-          token: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
-          repository: ruelala/${{ github.event.client_payload.application }}
-          event-type: 'deploy-event'
-          client-payload: '{ "branch": "${{ github.event.client_payload.branch }}", "fleet": "${{ github.event.client_payload.fleet }}" }'
+      - name: Get and update the release
+        shell: bash
+        run: |
+          get_tag_url="https://api.github.com/repos/RueLaLa/${{ github.event.client_payload.application }}/releases/tags/${{ github.event.client_payload.release_tag }}
+          release_url=$(curl --location --request GET "$get_tag_url" --header 'Content-Type: application/json' --header 'Accept: application/vnd.github.nebula-preview+json' --header 'Authorization: Bearer ${{ secrets.PERSONAL_ACCESS_TOKEN }}' | grep '"url"' | grep "${{ github.event.client_payload.application }}" | sed -e 's/[ \t]*"url":[ \t]*//' -e 's/[",]//g')
+          echo "Release URL: $release_url"
