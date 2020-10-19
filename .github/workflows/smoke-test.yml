@@ -14,7 +14,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: debugging output
-        run: echo "${{ github.event_name }} - ${{ github.event.event_type }}"
+        run: echo "${{ github.event_name }} - ${{ github.event }}"
       - name: Checkout repo
         uses: actions/checkout@main
       - name: Install Node.js ${{ env.NODE_VERSION }}
