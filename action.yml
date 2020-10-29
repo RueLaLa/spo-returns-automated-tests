@@ -1,0 +1,5 @@
+name: 'SPO Returns Smoke Test Action'
+description: 'Run SPO smoke tests'
+runs:
+  using: 'docker'
+  image: 'Dockerfile'

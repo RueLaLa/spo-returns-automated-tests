@@ -8,7 +8,13 @@ require('chromedriver');
 module.exports.buildChromeDriver = async () => {
   const options = new chrome.Options();
   options.setChromeBinaryPath(chromium.path);
-  options.addArguments([ '--headless', '--disable-gpu', '--window-size=1280,960' ]);
+  options.addArguments([
+    '--headless',
+    '--window-size=1280,960',
+    '--no-sandbox',
+    '--disable-extensions',
+    '--disable-dev-shm-usage',
+  ]);
 
   return new Promise(resolve => {
     new Builder()

@@ -7,6 +7,10 @@
     "lint": "eslint --format codeframe --ext .js '**/*.js'",
     "test": "mocha --recursive --timeout 10000"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/RueLaLa/spo-returns-automated-tests.git"
+  },
   "author": "Shop Premium Outlets",
   "license": "UNLICENSED",
   "dependencies": {

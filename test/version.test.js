@@ -1,6 +1,6 @@
 'use strict';
 const assert = require('assert');
-const { Key, By, until } = require('selenium-webdriver');
+const { By } = require('selenium-webdriver');
 
 const driverUtil = require('../utils/driver');
 
@@ -10,7 +10,7 @@ describe('basic tests of SPO-Returns app', function() {
   let baseUrl;
 
   before(async function() {
-    baseUrl = process.env.BASE_RETURNS_URL;
+    baseUrl = process.env.BASE_URL;
     if (!baseUrl) {
       baseUrl = 'http://localhost:3000';
     }
