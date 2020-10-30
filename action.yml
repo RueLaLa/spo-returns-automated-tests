@@ -3,3 +3,7 @@ description: 'Run SPO smoke tests'
 runs:
   using: 'docker'
   image: 'Dockerfile'
+branding:
+  image: 'activity'
+  color: 'purple'
+ 
