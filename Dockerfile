@@ -12,4 +12,4 @@ RUN npm install
 # bring the rest
 COPY . .
 
-ENTRYPOINT ["./entrypoint.sh"]
+ENTRYPOINT ["/usr/src/app/entrypoint.sh"]
