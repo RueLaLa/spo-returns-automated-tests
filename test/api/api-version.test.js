@@ -13,7 +13,7 @@ describe('Version test of SPO-Returns API', function () {
 
   it('checks the version returned in the header', async function () {
     // do not run this on local host, we don't have version information in the dev env
-    if (apiBaseUrl.indexOf('localhost') >= 0) {
+    if (apiBaseUrl.indexOf('localhost') < 0) {
       let expectedVersion = process.env.API_VERSION;
       let exactVersion = !!expectedVersion;
 
