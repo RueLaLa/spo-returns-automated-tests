@@ -644,3 +644,6 @@ MigrationBackup/
 .ionide/
 
 # End of https://www.toptal.com/developers/gitignore/api/macos,windows,linux,visualstudio,vim,intellij+all,node
+
+env/*
+!env/env-setup-template
