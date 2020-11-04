@@ -20,7 +20,14 @@ describe('Ensure items that are out of return window cannot be returned', functi
     const url = `${uiBaseUrl}/?orderId=${EXPIRED_ORDER_ID}`;
     await driver.get(url);
 
-    const messageElem = await driver.findElement(By.css('.return-data-message > p'))
+    let messageElem;
+    try {
+      // try this way first... sometimes space after class can cause hiccups
+      messageElem = await driver.findElement(By.css('.return-data-message > p'));
+    } catch (e) {
+      messageElem = await driver.findElement(By.xpath(`//*[@class="return-data-message "]//p`));
+    }
+    // const messageElem = await driver.findElement(By.css('.return-data-message > p'));
     const messageText = await messageElem.getAttribute('innerHTML');
     assert.ok(messageText.indexOf('return time frame has expired') >= 0);
 
