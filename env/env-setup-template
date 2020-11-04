@@ -1,0 +1,10 @@
+
+# uncomment the following line and fill in the release number
+# export API_VERSION="release:<release number e.g. v1.1.18>"
+
+# uncomment the following line and fill in the release number
+export UI_VERSION="release:<release number>"
+
+# change to the desired host values (DO NOT USE PROD VALUES HERE!)
+export RETURNS_UI_URL="http://localhost:3000"
+export RETURNS_API_URL="http://localhost:7071/api"
