@@ -40,8 +40,9 @@ describe('Version test of SPO-Returns API', function () {
           'Content-Type': 'application/json',
         },
       };
-
-      await axios.get(`${apiBaseUrl}/orders?orderNum=1&email=test@test.com&zip=11111`, config)
+      const url = `${apiBaseUrl}/orders?orderNum=1&email=test@test.com&zip=11111`;
+      console.log(`Using ${url} to get version`);
+      await axios.get(url, config)
         .then((response) => {
           confirmVersionFromHeaders(response.headers, expectedVersion);
         })
