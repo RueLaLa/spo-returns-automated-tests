@@ -50,43 +50,17 @@ describe('tests for when an item is not fulfilled', function () {
     if (customerId) {
       await customerService.thoroughDeleteCustomer(customerId);
     }
+
+    driver && driver.close();
   });
 
   it('will NOT allow quantity changes on unfulfilled items', async function() {
     await confirmMessageAndUntouchableSelect(url);
-    // await driver.get(url);
-    //
-    // const messageElem = await driver.findElement(By.css('.return-data-message > p'));
-    // const messageText = await messageElem.getAttribute('innerHTML');
-    // assert.ok('Not shipped'.toUpperCase() === messageText.toUpperCase());
-    //
-    // let foundError = false;
-    // try {
-    //   await driver.findElement(By.css('.return-data-item > select'));
-    // } catch (err) {
-    //   foundError = err;
-    // }
-    // assert.ok(foundError);
-    // assert.strictEqual(foundError.name, 'NoSuchElementError');
   });
 
   it('will NOT allow quantity changes on unfulfilled items even with CSR override', async function() {
     const urlWithOverride = `${url}&CSRMA=fake`;
     await confirmMessageAndUntouchableSelect(urlWithOverride);
-    // await driver.get(url + '&CSRMA=1234');
-    //
-    // const messageElem = await driver.findElement(By.css('.return-data-message > p'));
-    // const messageText = await messageElem.getAttribute('innerHTML');
-    // assert.ok('Not shipped'.toUpperCase() === messageText.toUpperCase());
-    //
-    // let foundError = false;
-    // try {
-    //   await driver.findElement(By.css('.return-data-item > select'));
-    // } catch (err) {
-    //   foundError = err;
-    // }
-    // assert.ok(foundError);
-    // assert.strictEqual(foundError.name, 'NoSuchElementError');
   });
 
   async function confirmMessageAndUntouchableSelect(testUrl) {

@@ -16,6 +16,10 @@ describe('Ensure items that are out of return window cannot be returned', functi
     EXPIRED_ORDER_ID = process.env.EXPIRED_ORDER_ID;
   });
 
+  after(async function() {
+    driver && driver.close();
+  });
+
   it('Replaces quantity and reason selectors with messaging', async function() {
     const url = `${uiBaseUrl}/?orderId=${EXPIRED_ORDER_ID}`;
     await driver.get(url);
