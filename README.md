@@ -12,10 +12,12 @@ tests against and to ensure proper test setup (calls to our test Shopify store).
 users, orders, and returns.
 
 **Required Variables**
+
 ```
-# The default values.
+# Default values shown if available
 RETURNS_API_URL=http://localhost:7071
 RETURNS_UI_URL=http://localhost:3000
+EXPIRED_ORDER_ID
 ```
 
 ---

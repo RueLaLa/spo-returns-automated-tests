@@ -1,11 +1,12 @@
 'use strict';
 
+const isEmpty = require('lodash.isempty');
 const { Builder } = require('selenium-webdriver');
 const chrome = require('selenium-webdriver/chrome');
 const chromium = require('chromium');
 require('chromedriver');
 
-module.exports.buildChromeDriver = async () => {
+module.exports.buildChromeDriver = async (timeoutConfig) => {
   const options = new chrome.Options();
   options.setChromeBinaryPath(chromium.path);
   options.addArguments([
@@ -21,6 +22,11 @@ module.exports.buildChromeDriver = async () => {
       .forBrowser('chrome')
       .setChromeOptions(options)
       .build()
-      .then(driver => resolve(driver));
+      .then(driver => {
+        if (timeoutConfig && !isEmpty(timeoutConfig)) {
+          driver.manage().setTimeouts(timeoutConfig);
+        }
+        resolve(driver)
+      });
   });
 }
