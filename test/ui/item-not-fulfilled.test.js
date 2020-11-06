@@ -43,6 +43,8 @@ describe('tests for when an item is not fulfilled', function () {
   });
 
   after(async function() {
+    driver && driver.close();
+
     if (orderId) {
       await orderService.deleteOrder(orderId);
     }
@@ -50,8 +52,6 @@ describe('tests for when an item is not fulfilled', function () {
     if (customerId) {
       await customerService.thoroughDeleteCustomer(customerId);
     }
-
-    driver && driver.close();
   });
 
   it('will NOT allow quantity changes on unfulfilled items', async function() {
