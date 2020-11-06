@@ -10,7 +10,7 @@ const customerService = require('../../services/customers');
 const orderService = require('../../services/orders');
 const productService = require('../../services/products');
 
-describe('tests for when an item is not fulfilled', function () {
+describe('Test that the UI responds properly when an item is not fulfilled', function () {
   let orderId;
   let customerId;
   let url;
