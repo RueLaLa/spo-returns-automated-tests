@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "lint": "eslint --format codeframe --ext .js '**/*.js'",
-    "test": "mocha --recursive --timeout 10000"
+    "test": "mocha --recursive --timeout 20000"
   },
   "repository": {
     "type": "git",
