@@ -28,5 +28,5 @@ module.exports.assertValueIsSelected = async (selectElem, expectedValue) => {
       foundSelectedValue = await option.getAttribute('value');
     }
   }
-  assert.strictEqual(foundSelectedValue, expectedValue);
+  expect(foundSelectedValue).toEqual(expectedValue);
 }
