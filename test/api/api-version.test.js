@@ -34,11 +34,13 @@ describe('Version test of SPO-Returns API', () => {
         }
       }, {});
       const versionInfoText = caseInsensitiveHeaders['x-version'];
+      let regex;
       if (exactVersion) {
-        expect(versionInfoText).toEqual(expectedVersion);
+        regex = new RegExp(`^${expectedVersion}$`);
       } else {
-        expect(/^(feature\/.*|bugfix\/.*|release|master|main):.*/.test(versionInfoText)).toEqual(true);
+        regex = /^(feature\/.*|bugfix\/.*|release|master|main):.*/;
       }
+      expect(regex.test(versionInfoText)).toEqual(true);
     } else {
       console.info('This is localhost and version will not be present in the API headers');
       expect(true).toEqual(true);
