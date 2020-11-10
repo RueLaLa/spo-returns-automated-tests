@@ -18,6 +18,9 @@ users, orders, and returns.
 RETURNS_API_URL=http://localhost:7071
 RETURNS_UI_URL=http://localhost:3000
 EXPIRED_ORDER_ID
+# site url with protocol: http|https
+SHOPIFY_SITE_URL
+SHOPIFY_ACCESS_TOKEN
 ```
 
 ---

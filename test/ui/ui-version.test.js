@@ -12,6 +12,10 @@ describe('Version test of SPO-Returns UI', function() {
     driver = await driverUtil.buildChromeDriver({});
   });
 
+  after(async function() {
+    driver && driver.close();
+  })
+
   it('checks the version exists and matches expected pattern', async function() {
     let expectedVersion = process.env.UI_VERSION;
     let exactVersion = !!expectedVersion;
