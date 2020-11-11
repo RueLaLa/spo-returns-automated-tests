@@ -16,6 +16,9 @@ module.exports.thoroughDeleteCustomer = async (customerId, maxRetries=5) => {
     deleted = await this.deleteCustomer(customerId);
     attempt++;
   }
+  if (!deleted) {
+    console.error(`Unable to delete user: ${customerId}`);
+  }
   return Promise.resolve(deleted);
 }
 
@@ -26,10 +29,10 @@ module.exports.deleteCustomer = async (customerId) => {
     headers: shopifyUtils.getAuthHeader()
   };
 
-  return new Promise((resolve, reject) => {
+  return new Promise((resolve) => {
     axios.request(config)
       .then(() =>{
-        console.log('Successfully deleted customer');
+        console.info('Successfully deleted customer');
         resolve(true);
       })
       .catch(err => {
@@ -39,7 +42,7 @@ module.exports.deleteCustomer = async (customerId) => {
         } else {
           message = err.message;
         }
-        console.log(`error: ${message}`);
+        console.info(`error: ${message}`);
         resolve(false);
       });
   });

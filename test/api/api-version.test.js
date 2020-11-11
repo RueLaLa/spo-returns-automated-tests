@@ -1,10 +1,10 @@
 'use strict';
-const assert = require('assert');
+
 const axios = require('axios');
 
-describe('Version test of SPO-Returns API', function () {
+describe('Version test of SPO-Returns API', () => {
   let apiBaseUrl;
-  before(function () {
+  beforeAll(() => {
     apiBaseUrl = process.env.RETURNS_API_URL;
     if (!apiBaseUrl) {
       apiBaseUrl = 'http://localhost:7071/api';
@@ -15,7 +15,7 @@ describe('Version test of SPO-Returns API', function () {
     const requireExactVersion = !!expectedVersion;
     // force list to lowercase
     const headerList = Object.keys(headers).map((header) => header.toLowerCase());
-    assert.strictEqual(headerList.includes('x-version'), true);
+    expect(headerList.includes('x-version')).toEqual(true);
     const caseInsensitiveHeaders = Object.keys(headers).reduce((obj, header) => {
       return {
         ...obj,
@@ -23,14 +23,17 @@ describe('Version test of SPO-Returns API', function () {
       }
     }, {});
     const versionInfoText = caseInsensitiveHeaders['x-version'];
+    let regex;
     if (requireExactVersion) {
-      assert.strictEqual(versionInfoText, expectedVersion);
+      regex = new RegExp(`^${expectedVersion}$`);
     } else {
-      assert.strictEqual(/^(feature\/.*|bugfix\/.*|release|master|main):.*/.test(versionInfoText), true);
+      regex = /^(feature\/.*|bugfix\/.*|release|master|main):.*/;
     }
+    expect(regex.test(versionInfoText)).toEqual(true);
   }
 
-  it('checks the version returned in the header', async function () {
+  /* eslint-disable jest/no-conditional-expect */
+  it('checks the version returned in the header', async () => {
     // do not run this on local host, we don't have version information in the dev env
     if (apiBaseUrl.indexOf('localhost') < 0) {
       const expectedVersion = process.env.API_VERSION;
@@ -40,8 +43,8 @@ describe('Version test of SPO-Returns API', function () {
           'Content-Type': 'application/json',
         },
       };
+
       const url = `${apiBaseUrl}/orders?orderNum=1&email=test@test.com&zip=11111`;
-      console.log(`Using ${url} to get version`);
       await axios.get(url, config)
         .then((response) => {
           confirmVersionFromHeaders(response.headers, expectedVersion);
@@ -50,13 +53,14 @@ describe('Version test of SPO-Returns API', function () {
           if (error.response) {
             confirmVersionFromHeaders(error.response.headers, expectedVersion);
           } else {
-            console.log(`Unexpected error from API: ${error.message}`);
-            assert.ok(false, error.message);
+            console.error(`Unexpected error from API: ${error.message}`);
+            throw error;
           }
         });
-
     } else {
-      assert.ok(true, 'This is localhost and version will not be present');
+      console.info('This is localhost and version will not be present in the API headers');
+      expect(true).toEqual(true);
     }
   });
+  /* eslint-enable jest/no-conditional-expect */
 });

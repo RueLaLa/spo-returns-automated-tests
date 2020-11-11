@@ -1,6 +1,5 @@
 'use strict';
 
-const assert = require('assert');
 const { By } = require('selenium-webdriver');
 
 const driverUtil = require('../../utils/driver');
@@ -10,12 +9,13 @@ const customerService = require('../../services/customers');
 const orderService = require('../../services/orders');
 const productService = require('../../services/products');
 
-describe('Test that the UI responds properly when an item is not fulfilled', function () {
+describe('Test that the UI responds properly when an item is not fulfilled', () => {
   let orderId;
   let customerId;
   let url;
   let driver;
-  before(async function() {
+
+  beforeAll(async () => {
     // build in an implicit 3 second wait so we don't have to wait for page to finish in our tests
     driver = await driverUtil.buildChromeDriver({ implicit: 3000 });
     const product = await productService.getProduct('2000');
@@ -42,23 +42,31 @@ describe('Test that the UI responds properly when an item is not fulfilled', fun
     url = `${uiBaseUrl}/?orderId=${orderId}`;
   });
 
-  after(async function() {
+  afterAll(async () => {
     driver && driver.close();
 
     if (orderId) {
-      await orderService.deleteOrder(orderId);
+      const orderDeleted = await orderService.deleteOrder(orderId);
+      if (!orderDeleted) {
+        console.error(`Unable to delete order id: ${orderId}`);
+      }
     }
 
     if (customerId) {
-      await customerService.thoroughDeleteCustomer(customerId);
+      const custDeleted = await customerService.thoroughDeleteCustomer(customerId);
+      if (!custDeleted) {
+        console.error(`Unable to delete customer id: ${customerId}`);
+      }
     }
   });
 
-  it('will NOT allow quantity changes on unfulfilled items', async function() {
+  // eslint-disable-next-line jest/expect-expect
+  it('will NOT allow quantity changes on unfulfilled items', async () => {
     await confirmMessageAndUntouchableSelect(url);
   });
 
-  it('will NOT allow quantity changes on unfulfilled items even with CSR override', async function() {
+  // eslint-disable-next-line jest/expect-expect
+  it('will NOT allow quantity changes on unfulfilled items even with CSR override', async () => {
     const urlWithOverride = `${url}&CSRMA=fake`;
     await confirmMessageAndUntouchableSelect(urlWithOverride);
   });
@@ -68,15 +76,15 @@ describe('Test that the UI responds properly when an item is not fulfilled', fun
 
     const messageElem = await driver.findElement(By.css('.return-data-message > p'));
     const messageText = await messageElem.getAttribute('innerHTML');
-    assert.ok('Not shipped'.toUpperCase() === messageText.toUpperCase());
+    expect(messageText.toUpperCase()).toEqual('NOT SHIPPED');
 
-    let foundError = false;
+    let foundError = undefined;
     try {
       await driver.findElement(By.css('.return-data-item > select'));
     } catch (err) {
       foundError = err;
     }
-    assert.ok(foundError);
-    assert.strictEqual(foundError.name, 'NoSuchElementError');
+    expect(foundError).toBeDefined();
+    expect(foundError.name).toEqual('NoSuchElementError');
   }
 });

@@ -1,22 +1,21 @@
 'use strict';
-const assert = require('assert');
 const { By } = require('selenium-webdriver');
 
 const driverUtil = require('../../utils/driver');
 const { uiBaseUrl } = require('../../utils/base-urls');
 
-describe('Version test of SPO-Returns UI', function() {
+describe('Version test of SPO-Returns UI', () => {
   let driver;
 
-  before(async function() {
+  beforeAll(async () => {
     driver = await driverUtil.buildChromeDriver({});
   });
 
-  after(async function() {
+  afterAll(async () => {
     driver && driver.close();
   })
 
-  it('checks the version exists and matches expected pattern', async function() {
+  it('checks the version exists and matches expected pattern', async () => {
     let expectedVersion = process.env.UI_VERSION;
     let exactVersion = !!expectedVersion;
 
@@ -24,10 +23,13 @@ describe('Version test of SPO-Returns UI', function() {
     const versionInfoElem = await driver.findElement(By.xpath('//*[@id="root"]/div[1]'));
     const versionInfoText = await versionInfoElem.getAttribute('innerHTML');
 
+    let regex;
     if (exactVersion) {
-      assert.strictEqual(versionInfoText, expectedVersion);
+      regex = new RegExp(`^${expectedVersion}$`);
     } else {
-      assert.strictEqual(true, /^(feature\/.*|bugfix\/.*|release|master|main):.*/.test(versionInfoText));
+      regex = /^(feature\/.*|bugfix\/.*|release|master|main):.*/;
     }
+
+    expect(regex.test(versionInfoText)).toEqual(true);
   });
 });

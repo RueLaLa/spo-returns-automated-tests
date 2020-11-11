@@ -1,7 +1,9 @@
 env:
   es6: true
   node: true
-extends: 'plugin:mocha/recommended'
+  "jest/globals": true
+extends:
+  - "plugin:jest/recommended"
 globals:
   Atomics: readonly
   SharedArrayBuffer: readonly
@@ -9,7 +11,5 @@ parserOptions:
   ecmaVersion: 2020
   sourceType: module
 plugins:
-  - mocha
-rules: {
-  "mocha/no-hooks-for-single-case": "off"
-}
+  - jest
+rules: {}
