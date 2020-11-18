@@ -11,7 +11,7 @@ describe('Ensure items that are out of return window cannot be returned', () => 
   let driver;
   beforeAll(async () => {
     // build in an implicit 5 second wait so we don't have to wait for page to finish in our tests
-    driver = await driverUtil.buildChromeDriver({ implicit: 5000 });
+    driver = await driverUtil.buildChromeDriver({ implicit: 6000 });
     EXPIRED_ORDER_ID = process.env.EXPIRED_ORDER_ID;
   });
 
