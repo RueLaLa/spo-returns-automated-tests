@@ -1,6 +1,7 @@
 'use strict';
 
 const { By, until } = require('selenium-webdriver');
+const { validate: uuidValidate } = require('uuid');
 
 const driverUtil = require('../../utils/driver');
 const { uiBaseUrl } = require('../../utils/base-urls');
@@ -94,9 +95,9 @@ describe('Test create a return for 1 item', () => {
     await submitButton.click();
 
     // longer explicit wait because creating the return takes time
-    const returnIdSpan = await driver.wait(until.elementLocated(By.css('.return-id')), 2000000);
+    const returnIdSpan = await driver.wait(until.elementLocated(By.css('.return-id')), 30000);
     const returnId = await returnIdSpan.getAttribute('innerHTML');
-    expect(/^[0-9a-f]{8}-[0-9a-f]{4}-[0-5][0-9a-f]{3}-[089ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(returnId)).toEqual(true);
+    expect(uuidValidate(returnId)).toEqual(true);
 
     // confirm email has arrived after short sleep to allow return email to arrive
     await timingUtils.sleep(3000);
