@@ -25,7 +25,7 @@ module.exports.createOrder = async (config) => {
     city: 'Yorkville',
     province_code: 'IL',
     zip: '60560',
-    country: 'USA',
+    country_code: 'US',
     phone: '(217)555-0122',
   };
 
@@ -44,6 +44,7 @@ module.exports.createOrder = async (config) => {
       send_receipt: false,
       send_fulfillment_receipt: false,
       billing_address: billingAddress,
+      shipping_address: billingAddress,
       customer: customer,
       email: customerEmail,
       line_items: config.lines,

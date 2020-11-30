@@ -2,16 +2,14 @@
 
 const axios = require('axios');
 const shopifyUtils = require('../utils/shopify-utils');
+const timingUtils = require('../utils/timing-utils');
 
-function sleep(ms) {
-  return new Promise(resolve => setTimeout(resolve, ms));
-}
 module.exports.thoroughDeleteCustomer = async (customerId, maxRetries=5) => {
   let deleted = false;
   let attempt = 0;
   while (!deleted && attempt < maxRetries) {
     if (attempt) {
-      await sleep(attempt * 1000);
+      await timingUtils.sleep(attempt * 1000);
     }
     deleted = await this.deleteCustomer(customerId);
     attempt++;

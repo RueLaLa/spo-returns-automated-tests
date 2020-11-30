@@ -21,6 +21,8 @@ EXPIRED_ORDER_ID
 # site url with protocol: http|https
 SHOPIFY_SITE_URL
 SHOPIFY_ACCESS_TOKEN
+# API Key for service that allows temp email addresses
+MAILSAC_API_KEY
 ```
 
 ---
